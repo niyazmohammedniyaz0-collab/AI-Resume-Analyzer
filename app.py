@@ -4,13 +4,16 @@
 
 from flask import Flask, render_template, request, redirect, session, url_for
 import os
-import sqlite3
-import PyPDF2
-import docx
+import mysql.connector
 
-app = Flask(__name__)
-app.secret_key = "supersecretkey"
-app.config['UPLOAD_FOLDER'] = 'uploads'
+db = mysql.connector.connect(
+    host=os.environ.get("MYSQL_HOST"),
+    user=os.environ.get("MYSQL_USER"),
+    password=os.environ.get("MYSQL_PASSWORD"),
+    database=os.environ.get("MYSQL_DATABASE")
+)
+
+cursor = db.cursor()
 
 # Required job skills
 job_skills = ["python", "aws", "flask", "docker", "sql", "nlp"]
